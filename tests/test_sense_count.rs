@@ -2,12 +2,14 @@
 fn test_sense_count() {
     use jmdict::{self, Enum};
     
-    // Find the entry for 換気 (ventilation) 
-    let entry = jmdict::entries()
-        .find(|e| e.number == 1212780)
-        .expect("Entry 1212780 should exist");
+    // Use entry 1001820 (お金 - money) which has translations in all languages
+    let test_entry_num = 1001820;
     
-    println!("Testing entry {} (換気 - ventilation)", entry.number);
+    let entry = jmdict::entries()
+        .find(|e| e.number == test_entry_num)
+        .expect("Entry 1001820 (お金) should exist in all configurations");
+    
+    println!("Testing entry {}", entry.number);
     
     let mut sense_count = 0;
     let mut total_gloss_count = 0;
@@ -30,7 +32,6 @@ fn test_sense_count() {
     println!("\nTotal senses: {}", sense_count);
     println!("Total glosses: {}", total_gloss_count);
     
-    // The entry for 換気 should have only 1 sense (ventilation), not multiple senses
-    // for different languages
+    // The entry should have only 1 sense, not multiple senses for different languages
     assert_eq!(sense_count, 1, "Expected 1 sense, found {}", sense_count);
 }
